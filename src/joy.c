@@ -172,10 +172,13 @@ static bool Joy_ReadJoystick(int nSdlJoyID, JOYREADING *pJoyReading)
 	pJoyReading->XPos = SDL_JoystickGetAxis(sdlJoystick[nSdlJoyID], pJoyReading->XAxisID);
 	pJoyReading->YPos = SDL_JoystickGetAxis(sdlJoystick[nSdlJoyID], pJoyReading->YAxisID);
 	/* Sets bit #0 if button #1 is pressed: */
-	pJoyReading->Buttons = SDL_JoystickGetButton(sdlJoystick[nSdlJoyID], 0);
+	pJoyReading->Buttons = SDL_JoystickGetButton(sdlJoystick[nSdlJoyID], 14);
 	/* Sets bit #1 if button #2 is pressed: */
-	if (SDL_JoystickGetButton(sdlJoystick[nSdlJoyID], 1))
-		pJoyReading->Buttons |= JOY_BUTTON2;
+	if (SDL_JoystickGetButton(sdlJoystick[nSdlJoyID], 13))
+          pJoyReading->Buttons |= JOY_BUTTON2;
+        /* Quit game when select button on PS3-controller is pressed */
+        if (SDL_JoystickGetButton(sdlJoystick[nSdlJoyID], 0))
+          Main_RequestQuit(0);
 
 	return true;
 }
